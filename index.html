@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<!-- saved from url=(0064)file:///Users/sthammath/Downloads/research_decision_flow_v3.html -->
+<html lang="th"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Research &amp; Decision Flow — Vermil</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: #f1f5f9; font-family: 'Segoe UI', Arial, sans-serif; padding: 32px 16px; }
+  .wrap { max-width: 780px; margin: 0 auto; background: #fff; border-radius: 16px; overflow: hidden; box-shadow: 0 4px 28px rgba(0,0,0,0.10); }
+
+  /* Header */
+  .header { background: #1a1a2e; padding: 28px 36px 22px; text-align: center; }
+  .header h1 { color: #fff; font-size: 22px; font-weight: 800; margin-bottom: 6px; }
+  .header p { color: #8892b0; font-size: 13px; line-height: 1.6; }
+
+  .content { padding: 26px 30px 32px; }
+
+  /* Problem banner */
+  .problem { background: #fff8e1; border: 1.5px solid #fbbf24; border-radius: 10px; padding: 14px 20px; margin-bottom: 24px; }
+  .problem-title { font-size: 13px; font-weight: 700; color: #92400e; margin-bottom: 8px; }
+  .problem-items { display: flex; gap: 8px; flex-wrap: wrap; }
+  .problem-tag { background: #fef3c7; border: 1px solid #f59e0b; border-radius: 20px; padding: 3px 12px; font-size: 12px; color: #78350f; }
+
+  /* Step card */
+  .step { border-radius: 14px; padding: 20px 22px 18px; margin-bottom: 8px; border-left: 6px solid; }
+  .step-head { display: flex; align-items: center; gap: 12px; margin-bottom: 4px; }
+  .badge { width: 34px; height: 34px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 15px; font-weight: 800; flex-shrink: 0; }
+  .step-title { font-size: 16px; font-weight: 800; }
+  .step-sub { font-size: 12.5px; margin-left: 46px; margin-bottom: 10px; font-style: italic; }
+  .step-desc { font-size: 13.5px; color: #334155; line-height: 1.7; margin-left: 46px; margin-bottom: 12px; }
+
+  /* Checklist */
+  .checklist { margin-left: 46px; margin-bottom: 12px; }
+  .checklist-item { display: flex; align-items: flex-start; gap: 8px; margin-bottom: 7px; }
+  .check-icon { font-size: 13px; margin-top: 1px; flex-shrink: 0; }
+  .check-text { font-size: 13px; color: #1e293b; line-height: 1.55; }
+  .check-text strong { font-weight: 700; }
+
+  /* Examples — tabs by function */
+  .ex-wrap { margin-left: 46px; margin-bottom: 12px; border-radius: 10px; overflow: hidden; border: 1px solid #e2e8f0; }
+  .ex-tabs { display: flex; background: #f8fafc; border-bottom: 1px solid #e2e8f0; overflow-x: auto; }
+  .ex-tab { padding: 7px 14px; font-size: 11.5px; font-weight: 600; color: #64748b; cursor: pointer; white-space: nowrap; border-bottom: 2px solid transparent; transition: all 0.15s; }
+  .ex-tab:hover { color: #1e293b; }
+  .ex-tab.active { color: #1e293b; border-bottom-color: #1e293b; background: #fff; }
+  .ex-panels { padding: 12px 14px; background: #fff; }
+  .ex-panel { display: none; }
+  .ex-panel.active { display: block; }
+  .ex-label { font-size: 10.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: #94a3b8; margin-bottom: 6px; }
+  .ex-bad { font-size: 12.5px; color: #991b1b; margin-bottom: 6px; padding: 6px 10px; background: #fef2f2; border-radius: 6px; }
+  .ex-bad::before { content: "✗  "; font-weight: 700; }
+  .ex-good { font-size: 12.5px; color: #166534; padding: 6px 10px; background: #f0fdf4; border-radius: 6px; }
+  .ex-good::before { content: "✓  "; font-weight: 700; }
+
+  /* Callout */
+  .callout { margin-left: 46px; border-radius: 8px; padding: 9px 16px; font-size: 13px; font-weight: 700; line-height: 1.5; }
+
+  .arrow { text-align: center; font-size: 22px; color: #cbd5e1; margin: 4px 0; }
+
+  /* Colors */
+  .s1 { background: #eef2ff; border-color: #6366f1; }
+  .s1 .badge { background: #6366f1; } .s1 .step-title { color: #3730a3; } .s1 .step-sub { color: #6366f1; }
+  .s1 .callout { background: #c7d2fe; color: #312e81; }
+  .s1 .ex-tab.active { border-bottom-color: #6366f1; color: #3730a3; }
+
+  .s2 { background: #fdf2f8; border-color: #ec4899; }
+  .s2 .badge { background: #ec4899; } .s2 .step-title { color: #9d174d; } .s2 .step-sub { color: #db2777; }
+  .s2 .callout { background: #fce7f3; color: #831843; }
+  .s2 .ex-tab.active { border-bottom-color: #ec4899; color: #9d174d; }
+
+  .s3 { background: #f0fdf4; border-color: #22c55e; }
+  .s3 .badge { background: #22c55e; } .s3 .step-title { color: #15803d; } .s3 .step-sub { color: #16a34a; }
+  .s3 .callout { background: #dcfce7; color: #14532d; }
+  .s3 .ex-tab.active { border-bottom-color: #22c55e; color: #15803d; }
+
+  .s4 { background: #fffbeb; border-color: #f59e0b; }
+  .s4 .badge { background: #f59e0b; } .s4 .step-title { color: #b45309; } .s4 .step-sub { color: #d97706; }
+  .s4 .callout { background: #fef3c7; color: #92400e; }
+  .s4 .ex-tab.active { border-bottom-color: #f59e0b; color: #b45309; }
+
+  .s5 { background: #f0f9ff; border-color: #0ea5e9; }
+  .s5 .badge { background: #0ea5e9; } .s5 .step-title { color: #0369a1; } .s5 .step-sub { color: #0284c7; }
+  .s5 .callout { background: #e0f2fe; color: #075985; }
+  .s5 .ex-tab.active { border-bottom-color: #0ea5e9; color: #0369a1; }
+
+  /* Cheat Sheet */
+  .cheat { background: #1a1a2e; border-radius: 12px; padding: 20px 24px; margin-top: 18px; }
+  .cheat-title { color: #f1f5f9; font-size: 14px; font-weight: 800; text-align: center; margin-bottom: 14px; }
+  .cheat-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; }
+  .cheat-card { background: #2d3a5e; border-radius: 10px; padding: 10px 8px; text-align: center; }
+  .cheat-num { color: #60a5fa; font-size: 11px; font-weight: 700; margin-bottom: 4px; }
+  .cheat-word { color: #f1f5f9; font-size: 12.5px; font-weight: 700; margin-bottom: 3px; }
+  .cheat-th { color: #8892b0; font-size: 10.5px; }
+
+  /* ── Research Brief Template ── */
+  .brief-section { margin-top: 28px; }
+  .brief-header { display: flex; align-items: center; gap: 10px; margin-bottom: 16px; }
+  .brief-header-icon { font-size: 20px; }
+  .brief-header-text h2 { font-size: 17px; font-weight: 800; color: #1e293b; }
+  .brief-header-text p { font-size: 12.5px; color: #64748b; margin-top: 2px; }
+
+  .brief-meta { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 12px; }
+  .brief-meta-field { display: flex; flex-direction: column; gap: 4px; }
+  .brief-meta-field label { font-size: 11px; font-weight: 700; color: #64748b; text-transform: uppercase; letter-spacing: 0.4px; }
+
+  .brief-field { margin-bottom: 12px; }
+  .brief-field label { display: flex; align-items: center; gap: 8px; font-size: 12.5px; font-weight: 700; color: #1e293b; margin-bottom: 6px; }
+  .brief-badge { display: inline-flex; align-items: center; justify-content: center; width: 22px; height: 22px; border-radius: 50%; color: #fff; font-size: 11px; font-weight: 800; }
+  .brief-field textarea, .brief-field input[type="text"] {
+    width: 100%; border: 1.5px solid #e2e8f0; border-radius: 8px;
+    padding: 10px 12px; font-size: 13px; font-family: inherit; color: #1e293b;
+    background: #f8fafc; resize: vertical; line-height: 1.5;
+    transition: border-color 0.15s;
+  }
+  .brief-field textarea:focus, .brief-field input[type="text"]:focus {
+    outline: none; border-color: #6366f1; background: #fff;
+  }
+  .brief-field textarea { min-height: 72px; }
+
+  .brief-criteria { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .brief-criteria-box { border-radius: 8px; padding: 10px 12px; }
+  .brief-criteria-box.success { background: #f0fdf4; border: 1.5px solid #86efac; }
+  .brief-criteria-box.failure { background: #fef2f2; border: 1.5px solid #fca5a5; }
+  .criteria-title { font-size: 11.5px; font-weight: 700; margin-bottom: 6px; }
+  .criteria-title.success { color: #15803d; }
+  .criteria-title.failure { color: #991b1b; }
+  .brief-criteria-box textarea { background: transparent; border: none; padding: 0; font-size: 12.5px; resize: none; min-height: 56px; }
+  .brief-criteria-box textarea:focus { outline: none; }
+
+  .brief-decision { display: flex; gap: 8px; margin-top: 4px; flex-wrap: wrap; }
+  .decision-btn { display: flex; align-items: center; gap: 6px; padding: 7px 16px; border-radius: 20px; border: 2px solid; font-size: 12.5px; font-weight: 700; cursor: pointer; transition: all 0.15s; background: #fff; }
+  .decision-btn.go { border-color: #22c55e; color: #15803d; }
+  .decision-btn.go.selected, .decision-btn.go:hover { background: #22c55e; color: #fff; }
+  .decision-btn.adjust { border-color: #f59e0b; color: #b45309; }
+  .decision-btn.adjust.selected, .decision-btn.adjust:hover { background: #f59e0b; color: #fff; }
+  .decision-btn.stop { border-color: #ef4444; color: #b91c1c; }
+  .decision-btn.stop.selected, .decision-btn.stop:hover { background: #ef4444; color: #fff; }
+
+  .print-btn { display: block; width: 100%; margin-top: 18px; padding: 12px; background: #1a1a2e; color: #fff; border: none; border-radius: 10px; font-size: 14px; font-weight: 700; cursor: pointer; letter-spacing: 0.3px; transition: background 0.15s; }
+  .print-btn:hover { background: #2d3a5e; }
+
+  .brief-divider { border: none; border-top: 2px dashed #e2e8f0; margin: 20px 0; }
+
+  @media (max-width: 520px) {
+    .cheat-grid { grid-template-columns: repeat(2, 1fr); }
+    .brief-meta, .brief-criteria { grid-template-columns: 1fr; }
+    .step-desc, .checklist, .ex-wrap, .callout, .step-sub { margin-left: 0; }
+    .brief-decision { flex-direction: column; }
+    .decision-btn { justify-content: center; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="header">
+    <h1>🔄 Research &amp; Decision Flow</h1>
+    <p>วิธีใช้ AI ให้ได้ผลลัพธ์ที่มีคุณค่า ไม่ใช่แค่ข้อมูลกองใหญ่<br>ทุก Research ต้องจบที่ Action ที่ชัดเจน — Vermil Archery</p>
+  </div>
+
+  <div class="content">
+
+    <div class="problem">
+      <div class="problem-title">⚠️ ปัญหาที่เกิดขึ้นบ่อยเมื่อใช้ AI วิจัย</div>
+      <div class="problem-items">
+        <span class="problem-tag">📦 ข้อมูลกว้างเกินไป</span>
+        <span class="problem-tag">🗑️ มีหลายอย่างที่ไม่จำเป็น</span>
+        <span class="problem-tag">🌫️ ไม่มี Insight ที่ชัดเจน</span>
+        <span class="problem-tag">😕 ไม่รู้จะทำอะไรต่อ</span>
+      </div>
+    </div>
+
+    <!-- STEP 1 -->
+    <div class="step s1">
+      <div class="step-head"><div class="badge">1</div><div class="step-title">Define Question &amp; Goal</div></div>
+      <div class="step-sub">กำหนดคำถามและเป้าหมายให้ชัดก่อนเริ่ม</div>
+      <div class="step-desc">ก่อนที่จะถาม AI หรือเริ่มค้นหาข้อมูลใด ๆ ต้องรู้ก่อนว่า <strong>เรากำลังหาคำตอบอะไร</strong> และ <strong>คำตอบนั้นจะนำไปตัดสินใจเรื่องอะไร</strong> ถ้าข้ามขั้นตอนนี้ไป AI จะให้ข้อมูลกว้าง ๆ ที่ใช้งานไม่ได้จริง</div>
+      <div class="checklist">
+        <div class="checklist-item"><span class="check-icon">✅</span><span class="check-text">คำถามต้องมี <strong>ข้อเดียว</strong> — ถ้ายังมีหลายข้อ ให้แตกย่อยแล้วทำทีละรอบ</span></div>
+        <div class="checklist-item"><span class="check-icon">✅</span><span class="check-text">ต้องรู้ล่วงหน้าว่า <strong>คำตอบนี้จะนำไปตัดสินใจอะไร</strong> เช่น "เพื่อตัดสินใจว่าจะเปิด SKU ใหม่หรือไม่"</span></div>
+        <div class="checklist-item"><span class="check-icon">✅</span><span class="check-text">คำถามที่ดีต้องตอบได้ชัดเจนว่า <strong>ใคร / ทำอะไร / ในบริบทไหน</strong></span></div>
+      </div>
+      <div class="ex-wrap">
+        <div class="ex-tabs">
+          <div class="ex-tab active" onclick="switchTab(this,&#39;s1&#39;)">🎯 Product Dev</div>
+          <div class="ex-tab" onclick="switchTab(this,&#39;s1&#39;)">📢 Marketing</div>
+          <div class="ex-tab" onclick="switchTab(this,&#39;s1&#39;)">🏭 Production</div>
+          <div class="ex-tab" onclick="switchTab(this,&#39;s1&#39;)">📦 Fulfillment</div>
+          <div class="ex-tab" onclick="switchTab(this,&#39;s1&#39;)">💬 CX</div>
+        </div>
+        <div class="ex-panels">
+          <div class="ex-panel active"><div class="ex-label">ตัวอย่าง</div><div class="ex-bad">"ช่วยหาข้อมูลเกี่ยวกับวัสดุทำ Thumb Ring หน่อย"</div><div class="ex-good">"วัสดุ Horn เทียบกับ PMI Foam ในแง่ durability และต้นทุนต่อหน่วย — เพื่อตัดสินใจเลือก material สำหรับ SKU ใหม่"</div></div>
+          <div class="ex-panel"><div class="ex-label">ตัวอย่าง</div><div class="ex-bad">"ช่วยหาข้อมูล Content ที่ดีสำหรับ Facebook"</div><div class="ex-good">"Format ไหน (Reel vs Static) ที่ทำให้ Retention สูงกว่า 50% ในกลุ่ม Traditional Archer — เพื่อตัดสินใจ Content mix ของเดือนหน้า"</div></div>
+          <div class="ex-panel"><div class="ex-label">ตัวอย่าง</div><div class="ex-bad">"ช่วยดูว่า Lead time เรานานเกินไปไหม"</div><div class="ex-good">"ขั้นตอนไหนใน Production flow ที่ทำให้ Lead time ต่อ SKU เกิน 3 วัน — เพื่อตัดสินใจว่าจะปรับ step ไหนก่อน"</div></div>
+          <div class="ex-panel"><div class="ex-label">ตัวอย่าง</div><div class="ex-bad">"ช่วยหาวิธีลด Shipping cost หน่อย"</div><div class="ex-good">"Courier ไหนมี On-time delivery rate สูงสุดสำหรับ Order ไปยุโรป ที่ cost ไม่เกิน ฿350/order — เพื่อตัดสินใจเปลี่ยน courier หรือไม่"</div></div>
+          <div class="ex-panel"><div class="ex-label">ตัวอย่าง</div><div class="ex-bad">"ช่วยดูว่าลูกค้าไม่พอใจเรื่องอะไร"</div><div class="ex-good">"Review 1–2 ดาวใน 3 เดือนล่าสุดบน Amazon/Etsy มาจาก issue ประเภทไหนมากที่สุด — เพื่อส่ง insight กลับไปที่ Product Dev และ Fulfillment"</div></div>
+        </div>
+      </div>
+      <div class="callout">👉 ถ้าตอบไม่ได้ว่า "จะเอาคำตอบนี้ไปตัดสินใจอะไร" = ยังไม่ควรเริ่ม</div>
+    </div>
+    <div class="arrow">↓</div>
+
+    <!-- STEP 2 -->
+    <div class="step s2">
+      <div class="step-head"><div class="badge">2</div><div class="step-title">Define Failure &amp; Success Criteria</div></div>
+      <div class="step-sub">กำหนดเกณฑ์ตัดสินผลก่อนเริ่มทดสอบ</div>
+      <div class="step-desc">ก่อนลงมือทำ ต้องกำหนดล่วงหน้าว่า <strong>ผลลัพธ์แบบไหนถือว่าสำเร็จ และแบบไหนถือว่าล้มเหลว</strong> ถ้าไม่กำหนดไว้ก่อน เราจะตีความผลตามอคติตัวเอง และไม่รู้ว่าควรหยุดหรือไปต่อ — Criteria เหล่านี้คือ KPI ของรอบนี้</div>
+      <div class="checklist">
+        <div class="checklist-item"><span class="check-icon">✅</span><span class="check-text"><strong>Success:</strong> ระบุตัวเลขหรือเงื่อนไขที่จับต้องได้ เช่น "ยอดขายเพิ่ม 15% ใน 60 วัน"</span></div>
+        <div class="checklist-item"><span class="check-icon">✅</span><span class="check-text"><strong>Failure:</strong> กำหนดจุดตัดชัดเจน เช่น "ถ้าต้นทุนเกิน X บาท หรือ Defect rate เกิน Y% → หยุดทันที"</span></div>
+        <div class="checklist-item"><span class="check-icon">✅</span><span class="check-text">Criteria ต้องกำหนด <strong>ก่อนเห็นผล</strong> — ห้ามตั้งทีหลัง เพราะจะตีความตามที่ตัวเองอยากได้ยิน</span></div>
+      </div>
+      <div class="ex-wrap">
+        <div class="ex-tabs">
+          <div class="ex-tab" onclick="switchTab(this,&#39;s2&#39;)">🎯 Product Dev</div>
+          <div class="ex-tab" onclick="switchTab(this,&#39;s2&#39;)">📢 Marketing</div>
+          <div class="ex-tab" onclick="switchTab(this,&#39;s2&#39;)">🏭 Production</div>
+          <div class="ex-tab" onclick="switchTab(this,&#39;s2&#39;)">📦 Fulfillment</div>
+          <div class="ex-tab active" onclick="switchTab(this,&#39;s2&#39;)">💬 CX</div>
+        </div>
+        <div class="ex-panels">
+          <div class="ex-panel"><div class="ex-label">ตัวอย่าง</div><div class="ex-bad">"ดูว่า prototype ผ่าน QC ไหม แล้วค่อยตัดสินใจ"</div><div class="ex-good">Success: อัตราผ่าน QC รอบแรก ≥ 85% &amp; ต้นทุนต่อหน่วย ≤ ฿X / Failure: Defect &gt; 15% หรือต้นทุนเกิน ฿Y → ทบทวน material ใหม่</div></div>
+          <div class="ex-panel"><div class="ex-label">ตัวอย่าง</div><div class="ex-bad">"ดูว่าผลตอบรับดีไหม แล้วค่อยตัดสินใจ"</div><div class="ex-good">Success: Reel Retention &gt; 50% &amp; Reach &gt; 5,000 ใน 7 วัน / Failure: Retention &lt; 30% → เปลี่ยน Hook ของ video ก่อนปล่อยต่อ</div></div>
+          <div class="ex-panel"><div class="ex-label">ตัวอย่าง</div><div class="ex-bad">"ลองดูก่อนว่า process ใหม่จะดีขึ้นไหม"</div><div class="ex-good">Success: Output per day เพิ่มขึ้น ≥ 20% โดย Rework rate ไม่เกิน 5% / Failure: Rework เกิน 5% → หยุด ทบทวน step ที่เปลี่ยน</div></div>
+          <div class="ex-panel"><div class="ex-label">ตัวอย่าง</div><div class="ex-bad">"ลอง Courier ใหม่แล้วค่อยดูผล"</div><div class="ex-good">Success: On-time delivery ≥ 92% ใน 30 shipment แรก / Failure: &lt; 85% หรือ Damage rate เพิ่มขึ้น → กลับ Courier เดิมทันที</div></div>
+          <div class="ex-panel active"><div class="ex-label">ตัวอย่าง</div><div class="ex-bad">"ดูว่าลูกค้าพอใจขึ้นไหมหลังปรับ template"</div><div class="ex-good">Success: Response time เฉลี่ย &lt; 4 ชม. &amp; Review rating เพิ่มขึ้น 0.2 ใน 30 วัน / Failure: ไม่มีการเปลี่ยนแปลง → ปรับ template ใหม่</div></div>
+        </div>
+      </div>
+      <div class="callout">👉 Criteria ที่ดีต้องกำหนดได้ก่อนเห็นผล ไม่ใช่ตั้งทีหลัง</div>
+    </div>
+    <div class="arrow">↓</div>
+
+    <!-- STEP 3 -->
+    <div class="step s3">
+      <div class="step-head"><div class="badge">3</div><div class="step-title">Design Real Test</div></div>
+      <div class="step-sub">ออกแบบการทดสอบที่สะท้อนโลกจริง</div>
+      <div class="step-desc">วิธีที่ดีที่สุดในการพิสูจน์สมมติฐานคือ <strong>ทดลองในสถานการณ์ที่ใกล้เคียงความเป็นจริงมากที่สุด</strong> ไม่ใช่แค่ถามความเห็นในทีม หรือทดสอบในเงื่อนไขที่สะดวกเกินไป ถ้า Test ไม่สะท้อนโลกจริง ผลที่ได้ก็นำไปใช้ไม่ได้</div>
+      <div class="checklist">
+        <div class="checklist-item"><span class="check-icon">✅</span><span class="check-text">ทดสอบกับ <strong>สถานการณ์จริง</strong> ไม่ใช่แค่ในทีมหรือเงื่อนไขที่เอื้ออำนวยพิเศษ</span></div>
+        <div class="checklist-item"><span class="check-icon">✅</span><span class="check-text">ต้องรวม <strong>worst-case scenario</strong> ด้วย เพราะของจริงมักไม่ราบรื่น</span></div>
+        <div class="checklist-item"><span class="check-icon">✅</span><span class="check-text">เปลี่ยน <strong>ทีละตัวแปร</strong> เพื่อให้รู้แน่ว่าอะไรคือสาเหตุจริง ๆ</span></div>
+      </div>
+      <div class="ex-wrap">
+        <div class="ex-tabs">
+          <div class="ex-tab active" onclick="switchTab(this,&#39;s3&#39;)">🎯 Product Dev</div>
+          <div class="ex-tab" onclick="switchTab(this,&#39;s3&#39;)">📢 Marketing</div>
+          <div class="ex-tab" onclick="switchTab(this,&#39;s3&#39;)">🏭 Production</div>
+          <div class="ex-tab" onclick="switchTab(this,&#39;s3&#39;)">📦 Fulfillment</div>
+          <div class="ex-tab" onclick="switchTab(this,&#39;s3&#39;)">💬 CX</div>
+        </div>
+        <div class="ex-panels">
+          <div class="ex-panel active"><div class="ex-label">ตัวอย่าง</div><div class="ex-bad">"ให้ทีมลองจับ Thumb Ring แล้วบอกว่าใช้ได้ไหม"</div><div class="ex-good">ส่ง prototype ให้ Super Fan 5 คน ยิงจริง 50 นัด บันทึก Grip comfort + precision fit + ระยะ wear ใน 1 สัปดาห์</div></div>
+          <div class="ex-panel"><div class="ex-label">ตัวอย่าง</div><div class="ex-bad">"โพสต์ Content ดูว่าคนกดไลค์ไหม"</div><div class="ex-good">ปล่อย Reel 2 เวอร์ชัน (Hook ต่างกัน) ไปยัง Cold Audience พร้อมกัน ดู Retention rate วินาทีที่ 3 และ 15 ใน 7 วัน โดยไม่ปรับ budget ระหว่างทดสอบ</div></div>
+          <div class="ex-panel"><div class="ex-label">ตัวอย่าง</div><div class="ex-bad">"ลองทำตาม process ใหม่แล้วดูว่าเร็วขึ้นไหม"</div><div class="ex-good">Run process ใหม่เฉพาะ SKU เดียว 1 batch (20 ชิ้น) บันทึก Lead time ต่อชิ้น + Defect ทุกรายการ เทียบกับ batch เดิมในสัปดาห์ก่อน</div></div>
+          <div class="ex-panel"><div class="ex-label">ตัวอย่าง</div><div class="ex-bad">"ลอง Courier ใหม่แล้วดูว่าลูกค้า complain น้อยลงไหม"</div><div class="ex-good">ใช้ Courier ใหม่กับ Order ยุโรป 30 รายการติดต่อกัน บันทึก On-time rate, Damage, และ Shipping cost ต่อ order ทุกรายการ</div></div>
+          <div class="ex-panel"><div class="ex-label">ตัวอย่าง</div><div class="ex-bad">"ปรับ Reply template แล้วดูว่าดีขึ้นไหม"</div><div class="ex-good">ใช้ template ใหม่กับ inbox 20 เคสถัดไป วัด Response time จริง + ติดตามว่าลูกค้า escalate หรือ close ปัญหาได้ภายใน 1 รอบ</div></div>
+        </div>
+      </div>
+      <div class="callout">👉 Test ที่ดีคือ Test ที่ถ้าได้ผลออกมา ทุกคนในทีมยอมรับผลนั้นได้โดยไม่เถียง</div>
+    </div>
+    <div class="arrow">↓</div>
+
+    <!-- STEP 4 -->
+    <div class="step s4">
+      <div class="step-head"><div class="badge">4</div><div class="step-title">Collect Data &amp; Generate Insight</div></div>
+      <div class="step-sub">เก็บข้อมูลที่จำเป็น แล้วแปลงเป็นความเข้าใจ</div>
+      <div class="step-desc">ข้อมูลดิบ (ตัวเลข, รายการ, กราฟ) ไม่ใช่ผลลัพธ์ของ Research <strong>Insight คือสิ่งที่เราเรียนรู้จากข้อมูล</strong> ซึ่งต้องนำไปสู่การตัดสินใจได้ทันที เก็บข้อมูลมากเกินไปโดยไม่มีจุดมุ่งหมายจะทำให้เสียเวลาและสับสน</div>
+      <div class="checklist">
+        <div class="checklist-item"><span class="check-icon">✅</span><span class="check-text">เก็บเฉพาะ <strong>ข้อมูลที่ตอบคำถามใน Step 1</strong> เท่านั้น</span></div>
+        <div class="checklist-item"><span class="check-icon">✅</span><span class="check-text">สรุปให้ได้ว่า <strong>"เราเรียนรู้อะไร"</strong> — ไม่ใช่แค่แสดงตัวเลข</span></div>
+        <div class="checklist-item"><span class="check-icon">✅</span><span class="check-text">Insight ที่ดีต้อง <strong>บอกทิศทางได้</strong> ว่าควรทำอะไรต่อ</span></div>
+      </div>
+      <div class="ex-wrap">
+        <div class="ex-tabs">
+          <div class="ex-tab active" onclick="switchTab(this,&#39;s4&#39;)">🎯 Product Dev</div>
+          <div class="ex-tab" onclick="switchTab(this,&#39;s4&#39;)">📢 Marketing</div>
+          <div class="ex-tab" onclick="switchTab(this,&#39;s4&#39;)">🏭 Production</div>
+          <div class="ex-tab" onclick="switchTab(this,&#39;s4&#39;)">📦 Fulfillment</div>
+          <div class="ex-tab" onclick="switchTab(this,&#39;s4&#39;)">💬 CX</div>
+        </div>
+        <div class="ex-panels">
+          <div class="ex-panel active"><div class="ex-label">ตัวอย่าง</div><div class="ex-bad">"PMI Foam ผ่าน QC 18/20 ชิ้น, Horn ผ่าน 14/20 ชิ้น"</div><div class="ex-good">PMI Foam มีอัตราผ่าน QC สูงกว่า Horn 20% และต้นทุนต่ำกว่า 30% → แนะนำใช้ PMI Foam เป็น material หลักสำหรับ SKU ถัดไป</div></div>
+          <div class="ex-panel"><div class="ex-label">ตัวอย่าง</div><div class="ex-bad">"Version A Retention 48%, Version B Retention 61%"</div><div class="ex-good">Hook แบบ "ปัญหา" (Version B) ดึง Retention ได้สูงกว่า Hook แบบ "สินค้า" (Version A) ถึง 27% → ควรเปลี่ยน Content pillar ให้เปิดด้วย pain point ทุกครั้ง</div></div>
+          <div class="ex-panel"><div class="ex-label">ตัวอย่าง</div><div class="ex-bad">"Lead time เฉลี่ย 4.2 วัน/SKU, Defect rate 6%"</div><div class="ex-good">80% ของ Lead time ที่เกิน 3 วัน มาจากขั้นตอน "ตรวจ QC รอบที่ 2" → ถ้าปรับ QC เกณฑ์รอบแรกให้เข้มขึ้น จะลด Lead time ได้โดยไม่เพิ่มคน</div></div>
+          <div class="ex-panel"><div class="ex-label">ตัวอย่าง</div><div class="ex-bad">"Courier ใหม่ On-time 89%, Courier เดิม On-time 91%"</div><div class="ex-good">Courier ใหม่ On-time ต่ำกว่าเดิม 2% แต่ Shipping cost ถูกกว่า ฿80/order → ยังไม่คุ้มที่จะเปลี่ยน ถ้าไม่สามารถเจรจา SLA ให้ดีขึ้นได้</div></div>
+          <div class="ex-panel"><div class="ex-label">ตัวอย่าง</div><div class="ex-bad">"Complaint เรื่อง shipping 12 เคส, สินค้า 8 เคส, ไม่ได้รับสินค้า 5 เคส"</div><div class="ex-good">48% ของ complaint มาจาก Tracking ไม่อัปเดต ไม่ใช่สินค้าเสีย → ปัญหาอยู่ที่ Fulfillment process ไม่ใช่ Product — ส่ง brief นี้ให้ทีม Fulfillmentทันที</div></div>
+        </div>
+      </div>
+      <div class="callout">👉 ถ้าอ่าน Insight แล้วยังไม่รู้จะทำอะไร = ยังไม่ใช่ Insight แค่เป็น Data</div>
+    </div>
+    <div class="arrow">↓</div>
+
+    <!-- STEP 5 -->
+    <div class="step s5">
+      <div class="step-head"><div class="badge">5</div><div class="step-title">Make Decision &amp; Iterate</div></div>
+      <div class="step-sub">ตัดสินใจและวนซ้ำจนได้คำตอบ</div>
+      <div class="step-desc">Research ไม่มีประโยชน์ถ้าไม่นำไปสู่ Action ทุกรอบต้องจบด้วย <strong>การตัดสินใจที่ชัดเจน</strong> ไม่ว่าจะเป็น "ไปต่อ", "ปรับแผน" หรือ "หยุด" ถ้ายังตัดสินใจไม่ได้ แปลว่า Test ยังไม่ดีพอ → ออกแบบรอบใหม่</div>
+      <div class="checklist">
+        <div class="checklist-item"><span class="check-icon">✅</span><span class="check-text"><strong>ไปต่อ 🟢:</strong> ผลผ่าน Criteria ใน Step 2 → ขยาย Scale หรือ Implement จริง</span></div>
+        <div class="checklist-item"><span class="check-icon">✅</span><span class="check-text"><strong>ปรับ 🟡:</strong> ผลยังไม่ชัด → ระบุว่าจะปรับตัวแปรอะไร แล้วทำ Test รอบใหม่</span></div>
+        <div class="checklist-item"><span class="check-icon">✅</span><span class="check-text"><strong>หยุด 🔴:</strong> ผลล้มเหลวตาม Criteria → หยุดทันที ไม่ฝืน บันทึกเหตุผลไว้ใช้ครั้งต่อไป</span></div>
+      </div>
+      <div class="ex-wrap">
+        <div class="ex-tabs">
+          <div class="ex-tab active" onclick="switchTab(this,&#39;s5&#39;)">🎯 Product Dev</div>
+          <div class="ex-tab" onclick="switchTab(this,&#39;s5&#39;)">📢 Marketing</div>
+          <div class="ex-tab" onclick="switchTab(this,&#39;s5&#39;)">🏭 Production</div>
+          <div class="ex-tab" onclick="switchTab(this,&#39;s5&#39;)">📦 Fulfillment</div>
+          <div class="ex-tab" onclick="switchTab(this,&#39;s5&#39;)">💬 CX</div>
+        </div>
+        <div class="ex-panels">
+          <div class="ex-panel active"><div class="ex-label">ตัวอย่าง</div><div class="ex-bad">"ผลออกมาโอเคนะ เดี๋ยวค่อยคุยกันว่าจะทำต่อยังไง"</div><div class="ex-good">PMI Foam ผ่าน Criteria → อนุมัติใช้ใน SKU ถัดไป ทีม Product Dev อัป BOM ภายใน 3 วัน ทีม Production เตรียม stock ภายในสัปดาห์นี้</div></div>
+          <div class="ex-panel"><div class="ex-label">ตัวอย่าง</div><div class="ex-bad">"ลองดูต่อไปอีกสักพักแล้วกัน"</div><div class="ex-good">Version B ผ่าน Criteria → เปลี่ยน Content format ทั้งหมดเป็นแบบ Hook "ปัญหา" ตั้งแต่สัปดาห์ถัดไป ทบทวนผลอีกครั้งใน 30 วัน</div></div>
+          <div class="ex-panel"><div class="ex-label">ตัวอย่าง</div><div class="ex-bad">"น่าจะดีขึ้น เดี๋ยว implement เลยแล้วกัน"</div><div class="ex-good">Defect rate เกิน Criteria → ยังไม่ implement วิเคราะห์ root cause ของ 6 ชิ้นที่ fail แล้วทดสอบใหม่อีก 1 batch ก่อนตัดสินใจ</div></div>
+          <div class="ex-panel"><div class="ex-label">ตัวอย่าง</div><div class="ex-bad">"Courier ใหม่ก็พอใช้ได้ เดี๋ยวลองต่ออีกสักเดือน"</div><div class="ex-good">Courier ใหม่ไม่ผ่าน SLA Criteria → กลับใช้ Courier เดิม แจ้งให้ Courier ใหม่ทราบ และทบทวนอีกครั้งใน Q3 ถ้าสามารถเจรจา SLA ได้ดีขึ้น</div></div>
+          <div class="ex-panel"><div class="ex-label">ตัวอย่าง</div><div class="ex-bad">"ปรับ reply ไปแล้ว เดี๋ยวดูว่าดีขึ้นไหม"</div><div class="ex-good">Template ใหม่ลด Response time ผ่าน Criteria → Roll out ทุก channel ภายในสัปดาห์นี้ ส่ง Insight complaint เรื่อง Tracking ให้ทีม Fulfillment แก้ภายใน 2 สัปดาห์</div></div>
+        </div>
+      </div>
+      <div class="callout">👉 ทุก Research ต้องจบที่ "Action" ที่ระบุได้ว่า ใคร ทำอะไร ภายในเมื่อไหร่</div>
+    </div>
+
+    <!-- Cheat Sheet -->
+    <div class="cheat">
+      <div class="cheat-title">🎯 Cheat Sheet — จำ 5 คำนี้ให้ขึ้นใจ</div>
+      <div class="cheat-grid">
+        <div class="cheat-card"><div class="cheat-num">STEP 1</div><div class="cheat-word">Question</div><div class="cheat-th">หาคำตอบอะไร</div></div>
+        <div class="cheat-card"><div class="cheat-num">STEP 2</div><div class="cheat-word">Criteria</div><div class="cheat-th">ดี/แย่ วัดจากอะไร</div></div>
+        <div class="cheat-card"><div class="cheat-num">STEP 3</div><div class="cheat-word">Test</div><div class="cheat-th">พิสูจน์ยังไง</div></div>
+        <div class="cheat-card"><div class="cheat-num">STEP 4</div><div class="cheat-word">Insight</div><div class="cheat-th">เรียนรู้อะไร</div></div>
+        <div class="cheat-card"><div class="cheat-num">STEP 5</div><div class="cheat-word">Decision</div><div class="cheat-th">ทำอะไรต่อ</div></div>
+      </div>
+    </div>
+
+    <button class="print-btn" onclick="window.open('vermil_research_brief_v2.pdf','_blank')">🖨️ สั่งพิมพ์ Research Brief</button>
+
+  </div>
+</div>
+
+<script>
+function switchTab(el, stepId) {
+  const wrap = el.closest('.ex-wrap');
+  wrap.querySelectorAll('.ex-tab').forEach(t => t.classList.remove('active'));
+  wrap.querySelectorAll('.ex-panel').forEach(p => p.classList.remove('active'));
+  el.classList.add('active');
+  const idx = Array.from(wrap.querySelectorAll('.ex-tab')).indexOf(el);
+  wrap.querySelectorAll('.ex-panel')[idx].classList.add('active');
+}
+
+function selectDecision(el) {
+  el.closest('.brief-decision').querySelectorAll('.decision-btn').forEach(b => b.classList.remove('selected'));
+  el.classList.add('selected');
+}
+</script>
+
+
+</body></html>
